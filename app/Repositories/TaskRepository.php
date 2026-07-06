@@ -97,7 +97,7 @@ class TaskRepository implements TaskRepositoryInterface
     {
         $query = Task::query()
             ->select(['id', 'title', 'status', 'priority', 'due_date', 'project_id', 'assigned_to', 'updated_at', 'created_at'])
-            ->with(['project:id,name,client_name,status', 'assignee:id,name'])
+            ->with(['project:id,name,client_name,status', 'assignee:id,name,email,role'])
             ->latest('updated_at');
 
         if ($user->isStaff()) {
