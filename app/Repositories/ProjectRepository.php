@@ -8,9 +8,9 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class ProjectRepository implements ProjectRepositoryInterface
 {
-    public function paginate(int $perPage = 15): LengthAwarePaginator
+    public function paginate(int $perPage = 15, array $filters = []): LengthAwarePaginator
     {
-        return Project::query()
+        $query = Project::query()
             ->select([
                 'id',
                 'name',
@@ -23,9 +23,21 @@ class ProjectRepository implements ProjectRepositoryInterface
                 'updated_at',
             ])
             ->withCount('tasks')
-            ->with(['users:id,name,email,role'])
-            ->latest()
-            ->paginate($perPage);
+            ->with(['users:id,name,email,role']);
+
+        if (! empty($filters['search'])) {
+            $search = $filters['search'];
+            $query->where(function ($builder) use ($search): void {
+                $builder->where('name', 'like', "%{$search}%")
+                    ->orWhere('client_name', 'like', "%{$search}%");
+            });
+        }
+
+        if (! empty($filters['status'])) {
+            $query->where('status', $filters['status']);
+        }
+
+        return $query->latest()->paginate($perPage)->withQueryString();
     }
 
     public function findById(int $id): ?Project
@@ -55,5 +67,15 @@ class ProjectRepository implements ProjectRepositoryInterface
     public function syncTeamMembers(Project $project, array $userIds): void
     {
         $project->users()->sync($userIds);
+    }
+
+    public function getRecent(int $limit = 5): \Illuminate\Support\Collection
+    {
+        return Project::query()
+            ->select(['id', 'name', 'client_name', 'status', 'due_date', 'updated_at'])
+            ->withCount('tasks')
+            ->latest('updated_at')
+            ->limit($limit)
+            ->get();
     }
 }

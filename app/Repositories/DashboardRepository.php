@@ -47,6 +47,12 @@ class DashboardRepository implements DashboardRepositoryInterface
             ->pluck('count', 'status')
             ->all();
 
+        $projectsByStatus = Project::query()
+            ->select('status', DB::raw('COUNT(*) as count'))
+            ->groupBy('status')
+            ->pluck('count', 'status')
+            ->all();
+
         return [
             'total_projects' => (int) $projectStats->total_projects,
             'active_projects' => (int) $projectStats->active_projects,
@@ -55,7 +61,8 @@ class DashboardRepository implements DashboardRepositoryInterface
             'active_tasks' => (int) $taskStats->active_tasks,
             'completed_tasks' => (int) $taskStats->completed_tasks,
             'overdue_tasks' => (int) $taskStats->overdue_tasks,
-            'tasks_by_status' => $this->normalizeStatusCounts($tasksByStatus),
+            'tasks_by_status' => $this->normalizeTaskStatusCounts($tasksByStatus),
+            'projects_by_status' => $this->normalizeProjectStatusCounts($projectsByStatus),
         ];
     }
 
@@ -93,7 +100,8 @@ class DashboardRepository implements DashboardRepositoryInterface
             'active_tasks' => (int) $taskStats->active_tasks,
             'completed_tasks' => (int) $taskStats->completed_tasks,
             'overdue_tasks' => (int) $taskStats->overdue_tasks,
-            'tasks_by_status' => $this->normalizeStatusCounts($tasksByStatus),
+            'tasks_by_status' => $this->normalizeTaskStatusCounts($tasksByStatus),
+            'projects_by_status' => [],
         ];
     }
 
@@ -101,11 +109,22 @@ class DashboardRepository implements DashboardRepositoryInterface
      * @param  array<string, int>  $counts
      * @return array<string, int>
      */
-    private function normalizeStatusCounts(array $counts): array
+    private function normalizeTaskStatusCounts(array $counts): array
     {
         $normalized = [];
 
         foreach (TaskStatus::cases() as $status) {
+            $normalized[$status->value] = (int) ($counts[$status->value] ?? 0);
+        }
+
+        return $normalized;
+    }
+
+    private function normalizeProjectStatusCounts(array $counts): array
+    {
+        $normalized = [];
+
+        foreach (ProjectStatus::cases() as $status) {
             $normalized[$status->value] = (int) ($counts[$status->value] ?? 0);
         }
 
