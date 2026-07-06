@@ -13,9 +13,9 @@ class ProjectService
         private readonly ProjectRepositoryInterface $projectRepository
     ) {}
 
-    public function list(int $perPage = 15): LengthAwarePaginator
+    public function list(int $perPage = 15, array $filters = []): LengthAwarePaginator
     {
-        return $this->projectRepository->paginate($perPage);
+        return $this->projectRepository->paginate($perPage, $filters);
     }
 
     public function find(int $id): ?Project
