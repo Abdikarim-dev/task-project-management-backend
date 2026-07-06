@@ -106,8 +106,27 @@ API Resource (response formatting)
 }
 ```
 
-Send the Sanctum token as a Bearer token:
+## Frontend (Blade)
 
+The web UI is built with Blade, Tailwind CSS 4, Alpine.js, and Chart.js.
+
+```bash
+npm install
+npm run dev   # development
+npm run build # production
 ```
-Authorization: Bearer {token}
-```
+
+Visit `http://localhost:8000/login` after starting the server.
+
+### Web Routes
+
+| Route | Access | Description |
+|-------|--------|-------------|
+| `/login` | Guest | Sign in |
+| `/dashboard` | Auth | Role-aware dashboard with charts |
+| `/projects` | Admin | Project management |
+| `/tasks` | Admin | Task management |
+| `/my-tasks` | Staff | Assigned tasks with status updates |
+| `/profile` | Auth | Account settings |
+
+Staff users only see Dashboard, My Tasks, and Profile in the sidebar.
