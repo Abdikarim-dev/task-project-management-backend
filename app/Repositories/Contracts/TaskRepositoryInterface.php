@@ -9,7 +9,7 @@ use Illuminate\Support\Collection;
 
 interface TaskRepositoryInterface
 {
-    public function paginateForUser(User $user, int $perPage = 15): LengthAwarePaginator;
+    public function paginateForUser(User $user, int $perPage = 15, array $filters = []): LengthAwarePaginator;
 
     public function findById(int $id): ?Task;
 

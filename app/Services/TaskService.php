@@ -15,9 +15,9 @@ class TaskService
         private readonly TaskRepositoryInterface $taskRepository
     ) {}
 
-    public function listForUser(User $user, int $perPage = 15): LengthAwarePaginator
+    public function listForUser(User $user, int $perPage = 15, array $filters = []): LengthAwarePaginator
     {
-        return $this->taskRepository->paginateForUser($user, $perPage);
+        return $this->taskRepository->paginateForUser($user, $perPage, $filters);
     }
 
     public function find(int $id): ?Task
