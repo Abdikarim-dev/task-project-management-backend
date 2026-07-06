@@ -5,11 +5,33 @@ Laravel 12 REST API for task and project management with role-based access contr
 ## Stack
 
 - Laravel 12
-- PHP 8.4+
+- PHP 8.2+
 - MySQL
 - Laravel Sanctum
 
 ## Setup
+
+### Requirements
+
+- PHP **8.2+** (Laravel 12 minimum)
+- Composer
+- MySQL
+
+### Windows note
+
+If XAMPP ships PHP 8.1, it is **too old** for this project. Either:
+
+1. **Use the standalone PHP 8.2 install** (recommended): download from [windows.php.net](https://windows.php.net/download/) and add it to your PATH **before** XAMPP, e.g. `C:\php82`.
+2. Or upgrade XAMPP to a bundle that includes PHP 8.2+.
+
+Verify:
+
+```bash
+php -v        # should show 8.2 or higher
+composer -V
+```
+
+### Install
 
 ```bash
 cd server
