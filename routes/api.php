@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\TaskController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('auth')->group(function (): void {
@@ -23,4 +24,6 @@ Route::middleware('auth:sanctum')->group(function (): void {
     Route::apiResource('tasks', TaskController::class);
     Route::patch('tasks/{task}/status', [TaskController::class, 'updateStatus'])
         ->name('tasks.update-status');
+
+    Route::apiResource('users', UserController::class)->only(['index', 'show']);
 });

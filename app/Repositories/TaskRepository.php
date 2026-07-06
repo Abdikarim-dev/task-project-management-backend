@@ -96,8 +96,8 @@ class TaskRepository implements TaskRepositoryInterface
     public function getRecentForUser(User $user, int $limit = 5): Collection
     {
         $query = Task::query()
-            ->select(['id', 'title', 'status', 'priority', 'due_date', 'project_id', 'assigned_to', 'updated_at'])
-            ->with(['project:id,name', 'assignee:id,name'])
+            ->select(['id', 'title', 'status', 'priority', 'due_date', 'project_id', 'assigned_to', 'updated_at', 'created_at'])
+            ->with(['project:id,name,client_name,status', 'assignee:id,name'])
             ->latest('updated_at');
 
         if ($user->isStaff()) {

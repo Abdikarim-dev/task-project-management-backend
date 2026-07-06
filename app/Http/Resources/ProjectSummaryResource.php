@@ -17,8 +17,8 @@ class ProjectSummaryResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'client_name' => $this->client_name,
-            'status' => $this->status->value,
-            'status_label' => $this->status->label(),
+            'status' => $this->status?->value,
+            'status_label' => $this->status?->label(),
         ];
     }
 }
