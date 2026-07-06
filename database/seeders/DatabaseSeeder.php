@@ -17,22 +17,24 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $admin = User::query()->create([
-            'name' => 'System Administrator',
+            'name' => 'Hassan Abdi',
             'email' => 'admin@example.com',
             'password' => Hash::make('password'),
             'role' => UserRole::Admin,
+            'job_title' => 'Platform Administrator',
             'email_verified_at' => now(),
         ]);
 
         $staffMembers = collect([
-            ['name' => 'Sarah Johnson', 'email' => 'sarah@example.com'],
-            ['name' => 'Michael Chen', 'email' => 'michael@example.com'],
-            ['name' => 'Emily Rodriguez', 'email' => 'emily@example.com'],
+            ['name' => 'Amina Mohamed', 'email' => 'amina@example.com', 'job_title' => 'Software Engineer'],
+            ['name' => 'Ibrahim Hashi', 'email' => 'ibrahim@example.com', 'job_title' => 'Project Coordinator'],
+            ['name' => 'Khadija Osman', 'email' => 'khadija@example.com', 'job_title' => 'Business Analyst'],
         ])->map(fn (array $staff): User => User::query()->create([
             'name' => $staff['name'],
             'email' => $staff['email'],
             'password' => Hash::make('password'),
             'role' => UserRole::Staff,
+            'job_title' => $staff['job_title'],
             'email_verified_at' => now(),
         ]));
 
@@ -40,41 +42,41 @@ class DatabaseSeeder extends Seeder
 
         $projects = collect([
             [
-                'name' => 'E-Commerce Platform Redesign',
-                'client_name' => 'Nova Retail Group',
-                'description' => 'Complete redesign of the customer-facing e-commerce platform with improved checkout flow.',
+                'name' => 'Mogadishu Port Digital Platform',
+                'client_name' => 'Mogadishu Port Authority',
+                'description' => 'Digitize cargo clearance, berth scheduling, and customs handoffs for the Port of Mogadishu.',
                 'start_date' => now()->subMonths(2)->toDateString(),
                 'due_date' => now()->addMonths(4)->toDateString(),
                 'status' => ProjectStatus::Active,
             ],
             [
-                'name' => 'Mobile Banking App',
-                'client_name' => 'Summit Financial',
-                'description' => 'Native mobile banking application with biometric authentication and real-time notifications.',
+                'name' => 'Somali Mobile Money Gateway',
+                'client_name' => 'Salaam Somali Bank',
+                'description' => 'Unified API for EVC Plus, Zaad, and bank wallet transfers across Somalia and Somaliland.',
                 'start_date' => now()->subMonth()->toDateString(),
                 'due_date' => now()->addMonths(6)->toDateString(),
                 'status' => ProjectStatus::Planning,
             ],
             [
-                'name' => 'Healthcare Portal Integration',
-                'client_name' => 'MediCare Solutions',
-                'description' => 'Integration of patient records portal with existing EMR systems.',
+                'name' => 'Diaspora Remittance Portal',
+                'client_name' => 'Dahabshiil',
+                'description' => 'Self-service portal for diaspora senders to track remittances to Hargeisa, Mogadishu, and Garowe.',
                 'start_date' => now()->subMonths(3)->toDateString(),
                 'due_date' => now()->addMonth()->toDateString(),
                 'status' => ProjectStatus::Active,
             ],
             [
-                'name' => 'Internal HR Dashboard',
-                'client_name' => 'GlobalTech Industries',
-                'description' => 'Employee self-service dashboard for leave requests, payslips, and performance reviews.',
+                'name' => 'Berbera Corridor Logistics Hub',
+                'client_name' => 'Somaliland Trade Commission',
+                'description' => 'End-to-end shipment tracking for goods moving through the Berbera port and Ethiopia corridor.',
                 'start_date' => now()->subMonths(5)->toDateString(),
                 'due_date' => now()->subWeek()->toDateString(),
                 'status' => ProjectStatus::Completed,
             ],
             [
-                'name' => 'Logistics Tracking System',
-                'client_name' => 'FastFreight Logistics',
-                'description' => 'Real-time shipment tracking system with GPS integration and automated alerts.',
+                'name' => 'National Livestock Export System',
+                'client_name' => 'Ministry of Livestock — Federal Republic of Somalia',
+                'description' => 'Certification and export documentation workflow for camel and cattle shipments to Gulf markets.',
                 'start_date' => now()->subWeeks(2)->toDateString(),
                 'due_date' => now()->addMonths(3)->toDateString(),
                 'status' => ProjectStatus::OnHold,
@@ -88,16 +90,56 @@ class DatabaseSeeder extends Seeder
         });
 
         $taskTemplates = [
-            ['title' => 'Gather requirements from stakeholders', 'priority' => TaskPriority::High, 'status' => TaskStatus::Completed],
-            ['title' => 'Create wireframes for main screens', 'priority' => TaskPriority::High, 'status' => TaskStatus::InProgress],
-            ['title' => 'Set up development environment', 'priority' => TaskPriority::Medium, 'status' => TaskStatus::Completed],
-            ['title' => 'Implement user authentication module', 'priority' => TaskPriority::High, 'status' => TaskStatus::InProgress],
-            ['title' => 'Design database schema', 'priority' => TaskPriority::High, 'status' => TaskStatus::Completed],
-            ['title' => 'Write API documentation', 'priority' => TaskPriority::Low, 'status' => TaskStatus::ToDo],
-            ['title' => 'Conduct code review session', 'priority' => TaskPriority::Medium, 'status' => TaskStatus::ToDo],
-            ['title' => 'Fix reported UI bugs', 'priority' => TaskPriority::Medium, 'status' => TaskStatus::InProgress],
-            ['title' => 'Optimize database queries', 'priority' => TaskPriority::Medium, 'status' => TaskStatus::ToDo],
-            ['title' => 'Prepare deployment checklist', 'priority' => TaskPriority::Low, 'status' => TaskStatus::ToDo],
+            [
+                'title' => 'Gather requirements from Mogadishu port stakeholders',
+                'priority' => TaskPriority::High,
+                'status' => TaskStatus::Completed,
+            ],
+            [
+                'title' => 'Integrate Hormuud EVC Plus payment callback',
+                'priority' => TaskPriority::High,
+                'status' => TaskStatus::InProgress,
+            ],
+            [
+                'title' => 'Configure Somali Shilling (SOS) currency formatting',
+                'priority' => TaskPriority::Medium,
+                'status' => TaskStatus::Completed,
+            ],
+            [
+                'title' => 'Implement bilingual Somali and English UI labels',
+                'priority' => TaskPriority::High,
+                'status' => TaskStatus::InProgress,
+            ],
+            [
+                'title' => 'Design Berbera corridor route mapping schema',
+                'priority' => TaskPriority::High,
+                'status' => TaskStatus::Completed,
+            ],
+            [
+                'title' => 'Document Salaam Somali Bank sandbox API',
+                'priority' => TaskPriority::Low,
+                'status' => TaskStatus::ToDo,
+            ],
+            [
+                'title' => 'Conduct code review with Garowe engineering team',
+                'priority' => TaskPriority::Medium,
+                'status' => TaskStatus::ToDo,
+            ],
+            [
+                'title' => 'Fix remittance status sync for Hargeisa branches',
+                'priority' => TaskPriority::Medium,
+                'status' => TaskStatus::InProgress,
+            ],
+            [
+                'title' => 'Optimize livestock export certificate queries',
+                'priority' => TaskPriority::Medium,
+                'status' => TaskStatus::ToDo,
+            ],
+            [
+                'title' => 'Prepare Central Bank of Somalia compliance checklist',
+                'priority' => TaskPriority::Low,
+                'status' => TaskStatus::ToDo,
+            ],
         ];
 
         $taskCount = 0;
@@ -114,8 +156,13 @@ class DatabaseSeeder extends Seeder
                 Task::query()->create([
                     'project_id' => $project->id,
                     'assigned_to' => $assignee->id,
-                    'title' => $template['title'].' #'.($taskCount + 1),
-                    'description' => 'Task for '.$project->name.' assigned to '.$assignee->name.'.',
+                    'title' => $template['title'],
+                    'description' => sprintf(
+                        'Deliverable for %s (%s). Assigned to %s for coordination with the client team.',
+                        $project->name,
+                        $project->client_name,
+                        $assignee->name
+                    ),
                     'priority' => $template['priority'],
                     'status' => $template['status'],
                     'due_date' => match ($template['status']) {

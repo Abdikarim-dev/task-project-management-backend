@@ -62,8 +62,8 @@ php artisan serve
 
 | Role  | Email             | Password  |
 |-------|-------------------|-----------|
-| Admin | admin@example.com | password  |
-| Staff | sarah@example.com | password  |
+| Admin | admin@example.com (Hassan Abdi) | password  |
+| Staff | amina@example.com (Amina Mohamed) | password  |
 | Staff | michael@example.com | password |
 | Staff | emily@example.com | password |
 

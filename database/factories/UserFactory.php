@@ -15,10 +15,24 @@ class UserFactory extends Factory
 {
     protected static ?string $password;
 
+    /** @var list<string> */
+    private static array $somaliNames = [
+        'Hassan Abdi',
+        'Amina Mohamed',
+        'Ibrahim Hashi',
+        'Khadija Osman',
+        'Mohamed Farah',
+        'Fadumo Ali',
+        'Yusuf Nur',
+        'Sahra Abdi',
+        'Abdirahman Warsame',
+        'Hibo Hassan',
+    ];
+
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
+            'name' => fake()->randomElement(self::$somaliNames),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
