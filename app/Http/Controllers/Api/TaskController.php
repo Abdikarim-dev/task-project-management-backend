@@ -25,7 +25,14 @@ class TaskController extends Controller
 
         $tasks = $this->taskService->listForUser(
             $request->user(),
-            (int) $request->integer('per_page', 15)
+            (int) $request->integer('per_page', 15),
+            array_filter([
+                'search' => $request->string('search')->toString() ?: null,
+                'status' => $request->string('status')->toString() ?: null,
+                'priority' => $request->string('priority')->toString() ?: null,
+                'project_id' => $request->integer('project_id') ?: null,
+                'sort' => $request->string('sort')->toString() ?: null,
+            ])
         );
 
         return ApiResponse::success([
