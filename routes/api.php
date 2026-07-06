@@ -19,11 +19,14 @@ Route::middleware('auth:sanctum')->group(function (): void {
 
     Route::get('dashboard', [DashboardController::class, 'index']);
 
+    Route::patch('auth/profile', [UserController::class, 'updateProfile']);
+
     Route::apiResource('projects', ProjectController::class);
 
     Route::apiResource('tasks', TaskController::class);
     Route::patch('tasks/{task}/status', [TaskController::class, 'updateStatus'])
         ->name('tasks.update-status');
 
-    Route::apiResource('users', UserController::class)->only(['index', 'show']);
+    Route::apiResource('users', UserController::class);
+    Route::patch('users/{user}/suspend', [UserController::class, 'suspend'])->name('users.suspend');
 });

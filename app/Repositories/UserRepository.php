@@ -48,4 +48,23 @@ class UserRepository implements UserRepositoryInterface
     {
         return User::query()->find($id);
     }
+
+    public function findWithRelations(int $id): ?User
+    {
+        return User::query()
+            ->with(['projects:id,name,client_name,status,due_date', 'tasks:id,assigned_to,status,project_id'])
+            ->find($id);
+    }
+
+    public function create(array $data): User
+    {
+        return User::query()->create($data);
+    }
+
+    public function update(User $user, array $data): User
+    {
+        $user->update($data);
+
+        return $user->fresh();
+    }
 }

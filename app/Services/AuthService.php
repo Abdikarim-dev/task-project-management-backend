@@ -26,6 +26,12 @@ class AuthService
             ]);
         }
 
+        if ($user->is_suspended) {
+            throw ValidationException::withMessages([
+                'email' => ['Your account has been suspended. Please contact an administrator.'],
+            ]);
+        }
+
         $token = $user->createToken('api-token')->plainTextToken;
 
         return [

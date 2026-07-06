@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\UpdateProfileRequest;
+use App\Http\Requests\User\StoreUserRequest;
+use App\Http\Requests\User\UpdateUserRequest;
+use App\Http\Resources\UserDetailResource;
 use App\Http\Resources\UserResource;
 use App\Http\Responses\ApiResponse;
 use App\Models\User;
@@ -39,19 +43,71 @@ class UserController extends Controller
         ], 'Users retrieved successfully.');
     }
 
+    public function store(StoreUserRequest $request): JsonResponse
+    {
+        $user = $this->userService->create($request->validated());
+
+        return ApiResponse::success(
+            new UserResource($user),
+            'User created successfully.',
+            201
+        );
+    }
+
     public function show(User $user): JsonResponse
     {
         $this->authorize('view', $user);
 
-        $user = $this->userService->find($user->id);
+        $detail = $this->userService->getDetail($user->id);
 
-        if (! $user) {
+        if (! $detail) {
             return ApiResponse::error('User not found.', 404);
         }
 
         return ApiResponse::success(
-            new UserResource($user),
+            new UserDetailResource($detail['user'], [
+                'projects' => $detail['projects'],
+                'tasks_by_status' => $detail['tasks_by_status'],
+                'projects_by_status' => $detail['projects_by_status'],
+                'tasks_count' => $detail['tasks_count'],
+            ]),
             'User retrieved successfully.'
+        );
+    }
+
+    public function update(UpdateUserRequest $request, User $user): JsonResponse
+    {
+        $user = $this->userService->update($user, $request->validated());
+
+        return ApiResponse::success(
+            new UserResource($user),
+            'User updated successfully.'
+        );
+    }
+
+    public function suspend(User $user): JsonResponse
+    {
+        $this->authorize('update', $user);
+
+        if ($user->isAdmin() && $user->id === auth()->id()) {
+            return ApiResponse::error('You cannot suspend your own admin account.', 422);
+        }
+
+        $user = $this->userService->suspend($user, ! $user->is_suspended);
+
+        return ApiResponse::success(
+            new UserResource($user),
+            $user->is_suspended ? 'User suspended successfully.' : 'User reactivated successfully.'
+        );
+    }
+
+    public function updateProfile(UpdateProfileRequest $request): JsonResponse
+    {
+        $user = $this->userService->update($request->user(), $request->validated());
+
+        return ApiResponse::success(
+            new UserResource($user),
+            'Profile updated successfully.'
         );
     }
 }
