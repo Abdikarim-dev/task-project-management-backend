@@ -43,6 +43,7 @@ class ProjectRepository implements ProjectRepositoryInterface
     public function findById(int $id): ?Project
     {
         return Project::query()
+            ->withCount('tasks')
             ->with(['users:id,name,email,role', 'tasks.assignee:id,name,email'])
             ->find($id);
     }

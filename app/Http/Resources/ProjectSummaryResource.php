@@ -19,6 +19,7 @@ class ProjectSummaryResource extends JsonResource
             'client_name' => $this->client_name,
             'status' => $this->status?->value,
             'status_label' => $this->status?->label(),
+            'due_date' => $this->due_date?->toDateString(),
         ];
     }
 }

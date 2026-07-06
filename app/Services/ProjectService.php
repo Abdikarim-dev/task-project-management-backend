@@ -3,9 +3,11 @@
 namespace App\Services;
 
 use App\Models\Project;
+use App\Models\Task;
 use App\Repositories\Contracts\ProjectRepositoryInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 class ProjectService
 {
@@ -51,6 +53,13 @@ class ProjectService
 
             if ($teamMemberIds !== null) {
                 $this->projectRepository->syncTeamMembers($project, $teamMemberIds);
+
+                Task::query()
+                    ->where('project_id', $project->id)
+                    ->whereNotNull('assigned_to')
+                    ->whereNotIn('assigned_to', $teamMemberIds)
+                    ->update(['assigned_to' => null]);
+
                 $project = $this->projectRepository->findById($project->id);
             }
 
@@ -60,6 +69,12 @@ class ProjectService
 
     public function delete(Project $project): void
     {
+        if ($project->tasks()->exists()) {
+            throw ValidationException::withMessages([
+                'project' => ['This project cannot be deleted because it still has tasks. Remove all tasks first.'],
+            ]);
+        }
+
         DB::transaction(fn (): bool => $this->projectRepository->delete($project));
     }
 }

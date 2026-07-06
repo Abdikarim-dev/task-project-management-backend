@@ -23,6 +23,7 @@ class ProjectResource extends JsonResource
             'status' => $this->status?->value,
             'status_label' => $this->status?->label(),
             'tasks_count' => $this->whenCounted('tasks'),
+            'can_delete' => $this->when(isset($this->tasks_count), fn (): bool => (int) $this->tasks_count === 0),
             'team_members' => UserResource::collection($this->whenLoaded('users')),
             'tasks' => TaskResource::collection($this->whenLoaded('tasks')),
             'created_at' => $this->created_at?->toISOString(),
