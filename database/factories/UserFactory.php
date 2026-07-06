@@ -29,6 +29,15 @@ class UserFactory extends Factory
         'Hibo Hassan',
     ];
 
+  /** @var list<string> */
+    private static array $somaliJobTitles = [
+        'Software Engineer',
+        'Project Coordinator',
+        'Business Analyst',
+        'DevOps Engineer',
+        'QA Specialist',
+    ];
+
     public function definition(): array
     {
         return [
@@ -37,6 +46,13 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'role' => UserRole::Staff,
+            'job_title' => fake()->randomElement(self::$somaliJobTitles),
+            'phone' => '+252 61 '.fake()->numerify('### ####'),
+            'bio' => fake()->randomElement([
+                'Delivers software for clients across Mogadishu, Hargeisa, and Garowe.',
+                'Supports mobile-money and remittance integrations in the Horn of Africa.',
+                'Coordinates with Somali public-sector and trade partners on delivery.',
+            ]),
             'remember_token' => Str::random(10),
         ];
     }

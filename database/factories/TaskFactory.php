@@ -36,7 +36,12 @@ class TaskFactory extends Factory
             'project_id' => Project::factory(),
             'assigned_to' => User::factory(),
             'title' => fake()->randomElement(self::$somaliTaskTitles),
-            'description' => fake()->paragraph(),
+            'description' => fake()->randomElement([
+                'Coordinate with the client team in Mogadishu on delivery milestones.',
+                'Validate integration against Somali mobile-money sandbox credentials.',
+                'Ensure compliance with Central Bank of Somalia reporting requirements.',
+                'Support bilingual Somali and English content across the platform.',
+            ]),
             'priority' => fake()->randomElement(TaskPriority::cases()),
             'status' => fake()->randomElement(TaskStatus::cases()),
             'due_date' => fake()->dateTimeBetween('now', '+3 months'),

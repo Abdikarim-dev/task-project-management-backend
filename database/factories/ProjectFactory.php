@@ -23,6 +23,7 @@ class ProjectFactory extends Factory
         ['name' => 'National Livestock Export System', 'client_name' => 'Ministry of Livestock — FRS'],
         ['name' => 'Garowe Education Management System', 'client_name' => 'Puntland Ministry of Education'],
         ['name' => 'Kismayo Fisheries Tracking Platform', 'client_name' => 'Jubaland Fisheries Authority'],
+        ['name' => 'Zoobe Shop', 'client_name' => 'Al Huda'],
     ];
 
     public function definition(): array
@@ -34,7 +35,12 @@ class ProjectFactory extends Factory
         return [
             'name' => $project['name'],
             'client_name' => $project['client_name'],
-            'description' => fake()->paragraph(),
+            'description' => fake()->randomElement([
+                'Digitize public-sector services for communities across Somalia.',
+                'Connect mobile-money providers with banking infrastructure in the Horn of Africa.',
+                'Track shipments through Berbera, Mogadishu, and Kismayo trade corridors.',
+                'Support diaspora remittance flows to Hargeisa, Garowe, and Bosaso.',
+            ]),
             'start_date' => $startDate,
             'due_date' => $dueDate,
             'status' => fake()->randomElement(ProjectStatus::cases()),
