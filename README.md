@@ -79,8 +79,8 @@ This drops all tables, recreates the schema, and loads Somali-themed demo data (
 
 | Name | Role | Email | Job title |
 |------|------|-------|-----------|
-| Hassan Abdi | Admin | admin@example.com | Platform Administrator |
-| Amina Mohamed | Staff | amina@example.com | Software Engineer |
+| Hassan Abdi | Admin | admin@aleelo.org | Platform Administrator |
+| Amina Mohamed | Staff | staff@aleelo.org | Software Engineer |
 | Ibrahim Hashi | Staff | ibrahim@example.com | Project Coordinator |
 | Khadija Osman | Staff | khadija@example.com | Business Analyst |
 
@@ -116,8 +116,8 @@ Ten Somali-context task templates are rotated across the first five projects, fo
 
 | Role | Name | Email | Password |
 |------|------|-------|----------|
-| Admin | Hassan Abdi | admin@example.com | password |
-| Staff | Amina Mohamed | amina@example.com | password |
+| Admin | Hassan Abdi | admin@aleelo.org | password |
+| Staff | Amina Mohamed | staff@aleelo.org | password |
 | Staff | Ibrahim Hashi | ibrahim@example.com | password |
 | Staff | Khadija Osman | khadija@example.com | password |
 
@@ -290,7 +290,7 @@ List endpoints return paginated data:
 ```bash
 curl -X POST http://localhost:8000/api/auth/login \
   -H "Content-Type: application/json" \
-  -d '{"email":"admin@example.com","password":"password"}'
+  -d '{"email":"admin@aleelo.org","password":"password"}'
 ```
 
 ### Dashboard
@@ -369,3 +369,4 @@ HTTP Request
 
 - Frontend (Blade BFF): [`../client/README.md`](../client/README.md)
 - UI screenshots: [`../client/docs/SCREENSHOTS.md`](../client/docs/SCREENSHOTS.md)
+

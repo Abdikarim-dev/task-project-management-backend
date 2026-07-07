@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
     {
         $admin = User::query()->create([
             'name' => 'Hassan Abdi',
-            'email' => 'admin@example.com',
+            'email' => 'admin@aleelo.org',
             'password' => Hash::make('password'),
             'role' => UserRole::Admin,
             'job_title' => 'Platform Administrator',
@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
         $staffMembers = collect([
             [
                 'name' => 'Amina Mohamed',
-                'email' => 'amina@example.com',
+                'email' => 'staff@aleelo.org',
                 'job_title' => 'Software Engineer',
                 'phone' => '+252 61 500 0002',
                 'bio' => 'Builds APIs and dashboards for Mogadishu and Hargeisa clients.',
@@ -71,7 +71,7 @@ class DatabaseSeeder extends Seeder
                 'start_date' => now()->subMonths(2)->toDateString(),
                 'due_date' => now()->addMonths(4)->toDateString(),
                 'status' => ProjectStatus::Active,
-                'team' => ['amina@example.com', 'ibrahim@example.com', 'khadija@example.com'],
+                'team' => ['staff@aleelo.org', 'ibrahim@example.com', 'khadija@example.com'],
             ],
             [
                 'name' => 'Somali Mobile Money Gateway',
@@ -80,7 +80,7 @@ class DatabaseSeeder extends Seeder
                 'start_date' => now()->subMonth()->toDateString(),
                 'due_date' => now()->addMonths(6)->toDateString(),
                 'status' => ProjectStatus::Planning,
-                'team' => ['amina@example.com', 'khadija@example.com'],
+                'team' => ['staff@aleelo.org', 'khadija@example.com'],
             ],
             [
                 'name' => 'Diaspora Remittance Portal',
@@ -89,7 +89,7 @@ class DatabaseSeeder extends Seeder
                 'start_date' => now()->subMonths(3)->toDateString(),
                 'due_date' => now()->addMonth()->toDateString(),
                 'status' => ProjectStatus::Active,
-                'team' => ['amina@example.com', 'ibrahim@example.com'],
+                'team' => ['staff@aleelo.org', 'ibrahim@example.com'],
             ],
             [
                 'name' => 'Berbera Corridor Logistics Hub',
@@ -116,7 +116,7 @@ class DatabaseSeeder extends Seeder
                 'start_date' => now()->addWeeks(2)->toDateString(),
                 'due_date' => now()->addMonths(2)->toDateString(),
                 'status' => ProjectStatus::Planning,
-                'team' => ['amina@example.com', 'khadija@example.com'],
+                'team' => ['staff@aleelo.org', 'khadija@example.com'],
                 'seed_tasks' => false,
             ],
         ];
